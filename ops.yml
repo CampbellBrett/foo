@@ -1,0 +1,13 @@
+version: "1"
+pipelines:
+  - name: foo:0.1.0
+    description: foo
+    jobs:
+      - name: foo-step-2
+        description: second pipeline job
+        sdk: "2"
+        steps:
+          - git clone https://$(sdk secret get DOCKER_REGISTRY_TOKEN):x-token-auth@github.com/CampbellBrett/Primavera-roll.git repo
+          - cd repo
+          - docker build -t ghcr.io/campbellbrett/sdf/proxy:latest .
+          - docker push ghcr.io/campbellbrett/sdf/proxy:latest
